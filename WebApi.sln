@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{8C38640B-0EE6-4F54-8A3D-840A2EEB52FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{47CD3ED6-A03C-46A4-81A1-893E0F9237B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{0374EA3C-8F34-4408-93F6-F14F82FB7FA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapi.core", "webapi.core\webapi.core.csproj", "{F912114C-C370-4265-BBDB-A7183489759B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B6506479-0755-4FFD-A3C9-7D884492C9D9}"
+	ProjectSection(SolutionItems) = preProject
+		editor.config = editor.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C38640B-0EE6-4F54-8A3D-840A2EEB52FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C38640B-0EE6-4F54-8A3D-840A2EEB52FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C38640B-0EE6-4F54-8A3D-840A2EEB52FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C38640B-0EE6-4F54-8A3D-840A2EEB52FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F912114C-C370-4265-BBDB-A7183489759B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F912114C-C370-4265-BBDB-A7183489759B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F912114C-C370-4265-BBDB-A7183489759B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F912114C-C370-4265-BBDB-A7183489759B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8C38640B-0EE6-4F54-8A3D-840A2EEB52FB} = {47CD3ED6-A03C-46A4-81A1-893E0F9237B1}
+		{F912114C-C370-4265-BBDB-A7183489759B} = {0374EA3C-8F34-4408-93F6-F14F82FB7FA4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C74A629-C77F-440B-8DFC-15246841DA94}
+	EndGlobalSection
+EndGlobal
