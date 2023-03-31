@@ -9,11 +9,15 @@ LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nl
 
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
+builder.Services.ConfigureRepositoryWrapper();
 
 builder.Services.AddControllers();
 builder.Services.ConfigureLoggerService();
+builder.Services.ConfigureMySqlContext(builder.Configuration);
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 

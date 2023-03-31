@@ -1,27 +1,36 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Contracts;
+using Microsoft.AspNetCore.Mvc;
 using webapi.core.contracts;
 
 namespace WebApi.Controllers
 {
+    [Route("api/veiculos")]
     [ApiController]
-    [Route("[controller]")]
     public class WebApiController : ControllerBase
     {
         private readonly ILoggerManager _logger;
+        private IRepositoryWrapper _repository;
 
-        public WebApiController(ILoggerManager logger)
+        public WebApiController(ILoggerManager logger, IRepositoryWrapper repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult GetAllOwners()
         {
-            _logger.LogInfo("Here is info message from the controller.");
-            _logger.LogDebug("Here is debug message from the controller.");
-            _logger.LogWarning("Here is warn message from the controller.");
-            _logger.LogError("Here is error message from the controller.");
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var owners = _repository.Veiculo.GetAllOwners();
+                _logger.LogInfo($"Retornou todos os proprietários do banco de dados.");
+                return Ok(owners);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Algo deu errado dentro da ação GetAllOwners: {ex.Message}");
+                return StatusCode(500, "Erro do Servidor Interno");
+            }
         }
     }
 }
