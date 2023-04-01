@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Entities.DataTransferObjects;
+using Entities.Models;
 
 namespace webapi.core
 {
@@ -6,7 +8,9 @@ namespace webapi.core
     {
         public MappingProfile()
         {
-            CreateMap<string, string>();
+            CreateMap<MarcaModels, MarcaDto>();
+
+            CreateMap<ModeloModels, ModeloDto>();
         }
     }
 }

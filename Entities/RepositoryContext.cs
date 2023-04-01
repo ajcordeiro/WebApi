@@ -15,7 +15,8 @@ namespace Entities
             : base(options)
         {
         }
-        public DbSet<Veiculo>? Veiculos { get; set; }
-        public DbSet<Marca>? Marcas { get; set; }
+        public DbSet<MarcaModels>? Marca { get; set; }
+        
+        public DbSet<ModeloModels>? Modelo { get; set; }
     }
 }

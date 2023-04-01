@@ -8,9 +8,9 @@ namespace Contracts
 {
     public interface IRepositoryWrapper
     {
-        IVeiculoRepository Veiculo { get; }
-
         IMarcaRepository Marca { get; }
+
+        IModeloRepository Modelo { get; }
 
         void Save();
     }

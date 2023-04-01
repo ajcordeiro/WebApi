@@ -6,20 +6,8 @@ namespace Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
-        private IVeiculoRepository _veiculo;
         private IMarcaRepository _marca;
-
-        public IVeiculoRepository Veiculo
-        {
-            get
-            {
-                if (_veiculo == null)
-                {
-                    _veiculo = new VeiculoRepository(_repoContext);
-                }
-                return _veiculo;
-            }
-        }
+        private IModeloRepository _modelo;
 
         public IMarcaRepository Marca
         {
@@ -30,6 +18,18 @@ namespace Repository
                     _marca = new MarcaRepository(_repoContext);
                 }
                 return _marca;
+            }
+        }
+
+        public IModeloRepository Modelo
+        {
+            get
+            {
+                if (_modelo == null)
+                {
+                    _modelo = new ModeloRepository(_repoContext);
+                }
+                return _modelo;
             }
         }
 
