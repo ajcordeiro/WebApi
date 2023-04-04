@@ -39,7 +39,7 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("marcas/{id}")]
         public IActionResult GetMarcaById(Guid id)
         {
             try

@@ -2,7 +2,7 @@
 
 namespace Contracts
 {
-    public interface IModeloRepository 
+    public interface IModeloRepository : IRepositoryBase<ModeloModels>
     {
        // IEnumerable<ModeloModels> GetAllModelos();
         IEnumerable<ModeloModels> GetAllModelos();

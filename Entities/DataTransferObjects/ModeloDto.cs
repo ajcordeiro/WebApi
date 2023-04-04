@@ -6,6 +6,6 @@
 
         public string? Modelo { get; set; }
 
-        public IEnumerable<MarcaDto>? Marca { get; set; }
+        //public IEnumerable<MarcaDto>? fabricante { get; set; }
     }
 }

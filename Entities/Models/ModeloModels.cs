@@ -14,8 +14,8 @@ namespace Entities.Models
         public string? Modelo { get; set; }
 
         [ForeignKey(nameof(MarcaModels))]
-        public Guid MarcaId { get; set; }
-        public MarcaModels? Marca { get; set; }
+        public Guid fabricanteId { get; set; }
+        public MarcaModels? fabricante { get; set; }
 
     }
 }

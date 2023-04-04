@@ -12,7 +12,7 @@ namespace Entities.DataTransferObjects
     {
         public Guid Id { get; set; }
 
-        public string? Marca { get; set; }
+        public string? MarcaVeiculo { get; set; }
 
       //public ICollection<Veiculo>? Marcas { get; set; }
     }

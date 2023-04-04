@@ -15,7 +15,7 @@ namespace Repository
         public IEnumerable<MarcaModels> GetAllMarcas()
         {
             return FindAll()
-                .OrderBy(ow => ow.Marca)
+                .OrderBy(ow => ow.MarcaVeiculo)
                 .ToList();
         }
 
@@ -28,7 +28,7 @@ namespace Repository
         public MarcaModels GetMarcaWithDetails(Guid marcaId)
         {
             return FindByCondition(marca => marca.Id.Equals(marcaId))
-               .Include(ac => ac.Marca)
+               .Include(ac => ac.MarcaVeiculo)
                .FirstOrDefault();
         }
     }

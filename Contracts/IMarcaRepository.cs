@@ -2,7 +2,7 @@
 
 namespace Contracts
 {
-    public interface IMarcaRepository 
+    public interface IMarcaRepository : IRepositoryBase<MarcaModels>
     {
         IEnumerable<MarcaModels> GetAllMarcas();
 
