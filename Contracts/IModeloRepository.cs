@@ -9,6 +9,6 @@ namespace Contracts
 
        // ModeloModels GetModeloById(Guid modeloId);
 
-       // ModeloModels GetModeloWithDetails(Guid modeloId);
+        ModeloModels GetModeloWithDetails(Guid Id);
     }
 }

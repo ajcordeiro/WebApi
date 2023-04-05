@@ -8,8 +8,13 @@ namespace Repository
     public class MarcaRepository : RepositoryBase<MarcaModels>, IMarcaRepository
     {
         public MarcaRepository(RepositoryContext repositoryContext)
-            :base(repositoryContext)
+            : base(repositoryContext)
         {
+        }
+
+        public void CreateMarca(MarcaModels marca)
+        {
+            Create(marca);
         }
 
         public IEnumerable<MarcaModels> GetAllMarcas()
@@ -22,14 +27,14 @@ namespace Repository
         public MarcaModels GetMarcaById(Guid marcaId)
         {
             return FindByCondition(marca => marca.Id.Equals(marcaId))
-           .FirstOrDefault();
+                    .FirstOrDefault();
         }
 
         public MarcaModels GetMarcaWithDetails(Guid marcaId)
         {
             return FindByCondition(marca => marca.Id.Equals(marcaId))
-               .Include(ac => ac.MarcaVeiculo)
-               .FirstOrDefault();
+                    .Include(ac => ac.MarcaVeiculo)
+                    .FirstOrDefault();
         }
     }
 }

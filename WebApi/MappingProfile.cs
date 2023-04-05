@@ -11,6 +11,8 @@ namespace webapi.core
             CreateMap<MarcaModels, MarcaDto>();
 
             CreateMap<ModeloModels, ModeloDto>();
+
+            CreateMap<MarcaForCreationDto, MarcaModels>();
         }
     }
 }

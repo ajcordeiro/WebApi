@@ -20,5 +20,11 @@ namespace Repository
                .OrderBy(ow => ow.Modelo)
                .ToList();
         }
+
+        public ModeloModels GetModeloWithDetails(Guid Id)
+        {
+            return FindByCondition(owner => owner.Id.Equals(Id))
+            .FirstOrDefault();
+        }
     }
 }

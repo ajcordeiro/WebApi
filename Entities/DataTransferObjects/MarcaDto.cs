@@ -14,6 +14,6 @@ namespace Entities.DataTransferObjects
 
         public string? MarcaVeiculo { get; set; }
 
-      //public ICollection<Veiculo>? Marcas { get; set; }
+        public IEnumerable<ModeloDto>? Modelo { get; set; }
     }
 }

@@ -9,5 +9,7 @@ namespace Contracts
         MarcaModels GetMarcaById(Guid marcaId);
 
         MarcaModels GetMarcaWithDetails(Guid marcaId);
+
+        void CreateMarca(MarcaModels marca);
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using webapi.core.contracts;
 
 namespace WebApi.Controllers
@@ -39,13 +41,14 @@ namespace WebApi.Controllers
             }
         }
 
-        [HttpGet("marcas/{id}")]
+        [HttpGet("{id}", Name = "MarcaById")]
+
         public IActionResult GetMarcaById(Guid id)
         {
             try
             {
                 var marca = _repository.Marca.GetMarcaById(id);
-                if(marca == null)
+                if (marca == null)
                 {
                     _logger.LogError($"A Marca com id: {id}, não foi encontrado no banco de dados.");
                     return NotFound();
@@ -58,10 +61,43 @@ namespace WebApi.Controllers
                     return Ok(marcaResult);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError($"Algo deu errado dentro da ação GetOwnerById: {ex.Message}");
                 return StatusCode(500, "Erro do Servidor Interno");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult CreateMarca([FromBody]MarcaForCreationDto marca)
+        {
+            try
+            {
+                if (marca == null)
+                {
+                    _logger.LogError("O objeto marca enviado do cliente é nulo.");
+                    return BadRequest("O objeto marca é nulo");
+                }
+
+                if(!ModelState.IsValid)
+                {
+                    _logger.LogError("Objeto marca inválido enviado do cliente.");
+                    return BadRequest("Objeto de modelo inválido");
+                }
+
+                var marcaEntity = _mapper.Map<MarcaModels>(marca);
+
+                _repository.Marca.CreateMarca(marcaEntity);
+                _repository.Save();
+
+                var createdMarca = _mapper.Map<MarcaDto>(marcaEntity);
+
+                return CreatedAtRoute("MarcaById", new { id = createdMarca.Id }, createdMarca);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Algo deu errado dentro da ação CreateOwner: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -83,30 +119,30 @@ namespace WebApi.Controllers
             }
         }
 
-        //[HttpGet("{id}/modelos")]
-        //public IActionResult GetModeloWithDetails(Guid id)
-        //{
-        //    try
-        //    {
-        //        var modelo = _repository.Modelo.GetModeloWithDetails(id);
-        //        if(modelo == null)
-        //        {
-        //            _logger.LogError($"O modelo com id: {id}, não foi encontrado no banco de dados.");
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            _logger.LogInfo($"Modelo retornado com detalhes para id: {id}");
+        [HttpGet("modelos/{id}")]
+        public IActionResult GetModeloWithDetails(Guid id)
+        {
+            try
+            {
+                var modelo = _repository.Modelo.GetModeloWithDetails(id);
+                if (modelo == null)
+                {
+                    _logger.LogError($"O modelo com id: {id}, não foi encontrado no banco de dados.");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInfo($"Modelo retornado com detalhes para id: {id}");
 
-        //            var modeloResult = _mapper.Map<MarcaDto>(modelo);
-        //            return Ok(modeloResult);
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        _logger.LogError($"Algo deu errado dentro da ação GetOwnerWithDetails: {ex.Message}");
-        //        return StatusCode(500, "Erro do Servidor Interno");
-        //    }
-        //}
+                    var modeloResult = _mapper.Map<ModeloDto>(modelo);
+                    return Ok(modeloResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Algo deu errado dentro da ação GetOwnerWithDetails: {ex.Message}");
+                return StatusCode(500, "Erro do Servidor Interno");
+            }
+        }
     }
 }
