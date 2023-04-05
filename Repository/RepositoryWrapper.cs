@@ -6,18 +6,18 @@ namespace Repository
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private RepositoryContext _repoContext;
-        private IMarcaRepository _marca;
+        private IFabricanteRepository _fabricante;
         private IModeloRepository _modelo;
 
-        public IMarcaRepository Marca
+        public IFabricanteRepository Fabricante
         {
             get
             {
-                if (_marca == null)
+                if (_fabricante == null)
                 {
-                    _marca = new MarcaRepository(_repoContext);
+                    _fabricante = new FabricanteRepository(_repoContext);
                 }
-                return _marca;
+                return _fabricante;
             }
         }
 
@@ -40,7 +40,7 @@ namespace Repository
 
         public void Save()
         {
-            throw new NotImplementedException();
+            _repoContext.SaveChanges();
         }
     }
 }

@@ -3,7 +3,6 @@ using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using webapi.core.contracts;
 
 namespace WebApi.Controllers
@@ -23,57 +22,57 @@ namespace WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("marcas")]
-        public IActionResult GetAllMarcas()
+        [HttpGet("fabricante")]
+        public IActionResult GetAllFabricantes()
         {
             try
             {
-                var marca = _repository.Marca.GetAllMarcas();
-                _logger.LogInfo($"Retornou todos os proprietários do banco de dados.");
+                var fabricante = _repository.Fabricante.GetAllFabricantes();
+                _logger.LogInfo($"Retornou todos os fabricantes do banco de dados.");
 
-                var marcaResult = _mapper.Map<IEnumerable<MarcaDto>>(marca);
-                return Ok(marcaResult);
+                var fabricanteResult = _mapper.Map<IEnumerable<FabricanteDto>>(fabricante);
+                return Ok(fabricanteResult);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Algo deu errado dentro da ação GetAllOwners: {ex.Message}");
+                _logger.LogError($"Algo deu errado dentro da ação GetAllFabricantes: {ex.Message}");
                 return StatusCode(500, "Erro do Servidor Interno");
             }
         }
 
-        [HttpGet("{id}", Name = "MarcaById")]
+        [HttpGet("{id}", Name = "FabricanteById")]
 
         public IActionResult GetMarcaById(Guid id)
         {
             try
             {
-                var marca = _repository.Marca.GetMarcaById(id);
-                if (marca == null)
+                var fabricante = _repository.Fabricante.GetFabricanteById(id);
+                if (fabricante == null)
                 {
-                    _logger.LogError($"A Marca com id: {id}, não foi encontrado no banco de dados.");
+                    _logger.LogError($"O Fabricante com id: {id}, não foi encontrado no banco de dados.");
                     return NotFound();
                 }
                 else
                 {
-                    _logger.LogInfo($"Marca devolvido com id: {id}");
+                    _logger.LogInfo($"Fabricante devolvido com id: {id}");
 
-                    var marcaResult = _mapper.Map<MarcaDto>(marca);
-                    return Ok(marcaResult);
+                    var fabricanteResult = _mapper.Map<FabricanteDto>(fabricante);
+                    return Ok(fabricanteResult);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Algo deu errado dentro da ação GetOwnerById: {ex.Message}");
+                _logger.LogError($"Algo deu errado dentro da ação GetFabricanteById: {ex.Message}");
                 return StatusCode(500, "Erro do Servidor Interno");
             }
         }
 
-        [HttpPost]
-        public IActionResult CreateMarca([FromBody]MarcaForCreationDto marca)
+        [HttpPost("modelos")]
+        public IActionResult CreateModelo([FromBody]ModeloForCreationDto modelo)
         {
             try
             {
-                if (marca == null)
+                if (modelo == null)
                 {
                     _logger.LogError("O objeto marca enviado do cliente é nulo.");
                     return BadRequest("O objeto marca é nulo");
@@ -85,14 +84,15 @@ namespace WebApi.Controllers
                     return BadRequest("Objeto de modelo inválido");
                 }
 
-                var marcaEntity = _mapper.Map<MarcaModels>(marca);
+                var modeloEntity = _mapper.Map<ModeloModels>(modelo);
 
-                _repository.Marca.CreateMarca(marcaEntity);
+               
+                _repository.Modelo.CreateModelo(modeloEntity);
                 _repository.Save();
 
-                var createdMarca = _mapper.Map<MarcaDto>(marcaEntity);
+                var createdModelo = _mapper.Map<ModeloDto>(modeloEntity);
 
-                return CreatedAtRoute("MarcaById", new { id = createdMarca.Id }, createdMarca);
+                return CreatedAtRoute("MarcaById", new { id = createdModelo.Id }, createdModelo);
             }
             catch(Exception ex)
             {
@@ -110,6 +110,7 @@ namespace WebApi.Controllers
                 _logger.LogInfo($"Retornou todos os modelos do banco de dados.");
 
                 var modeloResult = _mapper.Map<IEnumerable<ModeloDto>>(modelo);
+
                 return Ok(modeloResult);
             }
             catch (Exception ex)
@@ -125,6 +126,10 @@ namespace WebApi.Controllers
             try
             {
                 var modelo = _repository.Modelo.GetModeloWithDetails(id);
+
+                var teste = modelo.FabricanteId;
+                var fabricante = _repository.Fabricante.GetFabricanteById(teste);
+
                 if (modelo == null)
                 {
                     _logger.LogError($"O modelo com id: {id}, não foi encontrado no banco de dados.");
@@ -135,7 +140,9 @@ namespace WebApi.Controllers
                     _logger.LogInfo($"Modelo retornado com detalhes para id: {id}");
 
                     var modeloResult = _mapper.Map<ModeloDto>(modelo);
-                    return Ok(modeloResult);
+                    var fabricanteResult = _mapper.Map<FabricanteDto>(fabricante);
+                    
+                    return Ok(modeloResult, fabricanteResult);
                 }
             }
             catch (Exception ex)

@@ -4,11 +4,12 @@ namespace Contracts
 {
     public interface IModeloRepository : IRepositoryBase<ModeloModels>
     {
-       // IEnumerable<ModeloModels> GetAllModelos();
         IEnumerable<ModeloModels> GetAllModelos();
 
-       // ModeloModels GetModeloById(Guid modeloId);
+        ModeloModels GetModeloById(Guid modeloId);
 
-        ModeloModels GetModeloWithDetails(Guid Id);
+        ModeloModels GetModeloWithDetails(Guid modeloId);
+
+        void CreateModelo(ModeloModels modelo);
     }
 }

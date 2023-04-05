@@ -8,7 +8,7 @@ namespace Contracts
 {
     public interface IRepositoryWrapper
     {
-        IMarcaRepository Marca { get; }
+        IFabricanteRepository Fabricante { get; }
 
         IModeloRepository Modelo { get; }
 

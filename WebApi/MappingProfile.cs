@@ -8,11 +8,11 @@ namespace webapi.core
     {
         public MappingProfile()
         {
-            CreateMap<MarcaModels, MarcaDto>();
+            CreateMap<FabricanteModels, FabricanteDto>();
 
             CreateMap<ModeloModels, ModeloDto>();
 
-            CreateMap<MarcaForCreationDto, MarcaModels>();
+            CreateMap<ModeloForCreationDto, ModeloModels>();
         }
     }
 }
