@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects;
+using Entities.DTOs;
 using Entities.Models;
 
 namespace webapi.core
@@ -13,6 +14,10 @@ namespace webapi.core
             CreateMap<ModeloModels, ModeloDto>();
 
             CreateMap<ModeloForCreationDto, ModeloModels>();
+
+            CreateMap<ModeloForCreationDto, ModeloDto>();
+
+            CreateMap<ModeloForUpdateDto, ModeloModels>();
         }
     }
 }

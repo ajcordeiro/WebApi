@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -8,13 +9,22 @@ namespace Repository
     {
         public ModeloRepository(RepositoryContext repositoryContext)
             :base(repositoryContext)
-            
         {
         }
 
         public void CreateModelo(ModeloModels modelo)
         {
             Create(modelo);
+        }
+
+        public void UpdateModelo(ModeloModels modelo)
+        {
+            Update(modelo);
+        }
+
+        public void DeleteModelo(ModeloModels modelo)
+        {
+            Delete(modelo);
         }
 
         public IEnumerable<ModeloModels> GetAllModelos()
@@ -33,6 +43,7 @@ namespace Repository
         public ModeloModels GetModeloWithDetails(Guid Id)
         {
             return FindByCondition(owner => owner.Id.Equals(Id))
+                .Include
             .FirstOrDefault();
         }
     }

@@ -17,6 +17,11 @@ namespace Repository
             Create(fabricante);
         }
 
+        public void UpdateFabricante(FabricanteModels fabricante)
+        {
+            Update(fabricante);
+        }
+
         public IEnumerable<FabricanteModels> GetAllFabricantes()
         {
             return FindAll()
@@ -36,5 +41,6 @@ namespace Repository
                     .Include(ac => ac.Id)
                     .FirstOrDefault();
         }
+
     }
 }

@@ -12,6 +12,8 @@ namespace Contracts
 
         void CreateFabricante(FabricanteModels fabricante);
 
+        void UpdateFabricante(FabricanteModels fabricante);
+
      
     }
 }

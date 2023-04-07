@@ -1,4 +1,5 @@
-﻿namespace Entities.DataTransferObjects
+﻿namespace Entities.DTOs
+
 {
     public class FabricanteDto
     {

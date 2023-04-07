@@ -1,4 +1,4 @@
-﻿namespace Entities.DataTransferObjects
+﻿namespace Entities.DTOs
 {
     public class ModeloDto
     {
@@ -14,6 +14,6 @@
 
         public string? CombustivelId { get; set; }
 
-       public IEnumerable<FabricanteDto>? Fabricante { get; set; }
+        public FabricanteDto? Fabricante { get; set; }
     }
 }

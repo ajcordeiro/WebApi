@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entities.DataTransferObjects;
+using Entities.DTOs;
 using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using webapi.core.contracts;
@@ -41,7 +42,6 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}", Name = "FabricanteById")]
-
         public IActionResult GetMarcaById(Guid id)
         {
             try
@@ -67,6 +67,61 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet("modelos")]
+        public IActionResult GetAllModelos()
+        {
+            try
+            {
+                var modelo = _repository.Modelo.GetAllModelos();
+                _logger.LogInfo($"Retornou todos os modelos do banco de dados.");
+
+                var modeloResult = _mapper.Map<IEnumerable<ModeloDto>>(modelo);
+
+                return Ok(modeloResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Algo deu errado dentro da ação GetAllModelos: {ex.Message}");
+                return StatusCode(500, "Erro do Servidor Interno");
+            }
+        }
+
+        [HttpGet("modelos/{id}")]
+        public IActionResult GetModeloWithDetails(Guid id)
+        {
+            try
+            {
+                var modelo = _repository.Modelo.GetModeloWithDetails(id);
+
+                var teste = modelo.FabricanteId;
+                
+                var fabricante = _repository.Fabricante.GetFabricanteById(teste);
+
+                modelo.Fabricante = fabricante;
+
+                if (modelo == null)
+                {
+                    _logger.LogError($"O modelo com id: {id}, não foi encontrado no banco de dados.");
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInfo($"Modelo retornado com detalhes para id: {id}");
+
+                    var modeloResult = _mapper.Map<ModeloDto>(modelo);
+                    var fabricanteResult = _mapper.Map<FabricanteDto>(fabricante);
+
+                   
+                    return Ok(modeloResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Algo deu errado dentro da ação GetModeloWithDetails: {ex.Message}");
+                return StatusCode(500, "Erro do Servidor Interno");
+            }
+        }
+
         [HttpPost("modelos")]
         public IActionResult CreateModelo([FromBody]ModeloForCreationDto modelo)
         {
@@ -86,7 +141,6 @@ namespace WebApi.Controllers
 
                 var modeloEntity = _mapper.Map<ModeloModels>(modelo);
 
-               
                 _repository.Modelo.CreateModelo(modeloEntity);
                 _repository.Save();
 
@@ -96,59 +150,72 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-                _logger.LogError($"Algo deu errado dentro da ação CreateOwner: {ex.Message}");
+                _logger.LogError($"Algo deu errado dentro da ação CreateModelo: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpGet("modelos")]
-        public IActionResult GetAllModelos()
+        [HttpPut("modelos/{id}")]
+        public IActionResult UpdateModelo(Guid id, [FromBody]ModeloForUpdateDto modelo)
         {
             try
             {
-                var modelo = _repository.Modelo.GetAllModelos();
-                _logger.LogInfo($"Retornou todos os modelos do banco de dados.");
+                if(modelo == null)
+                {
+                    _logger.LogError("O objeto modelo enviado do cliente é nulo.");
+                    return BadRequest("O objeto modelo é nulo");
+                }
 
-                var modeloResult = _mapper.Map<IEnumerable<ModeloDto>>(modelo);
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Objeto modelo inválido enviado do cliente.");
+                    return BadRequest("Objeto de modelo inválido");
+                }
 
-                return Ok(modeloResult);
+                var modeloEntity = _repository.Modelo.GetModeloById(id);
+
+                if(modeloEntity == null)
+                {
+                    _logger.LogError($"Modelo com id: {id}, não foi encontrado no banco de dados.");
+                    return NotFound();
+                }
+
+                _mapper.Map(modelo, modeloEntity);
+
+                _repository.Modelo.UpdateModelo(modeloEntity);
+                _repository.Save();
+
+                return NoContent();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                _logger.LogError($"Algo deu errado dentro da ação GetAllOwners: {ex.Message}");
-                return StatusCode(500, "Erro do Servidor Interno");
+                _logger.LogError($"Algo deu errado dentro da ação UpdateModelo: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpGet("modelos/{id}")]
-        public IActionResult GetModeloWithDetails(Guid id)
+        [HttpDelete("modelos/{id}")]
+        public IActionResult DeleteModelo(Guid id)
         {
             try
             {
-                var modelo = _repository.Modelo.GetModeloWithDetails(id);
+                var modelo = _repository.Modelo.GetModeloById(id);
 
-                var teste = modelo.FabricanteId;
-                var fabricante = _repository.Fabricante.GetFabricanteById(teste);
-
-                if (modelo == null)
+                if(modelo == null)
                 {
-                    _logger.LogError($"O modelo com id: {id}, não foi encontrado no banco de dados.");
+                    _logger.LogError($"Modelo com id: {id}, não foi encontrado no banco de dados.");
                     return NotFound();
                 }
-                else
-                {
-                    _logger.LogInfo($"Modelo retornado com detalhes para id: {id}");
 
-                    var modeloResult = _mapper.Map<ModeloDto>(modelo);
-                    var fabricanteResult = _mapper.Map<FabricanteDto>(fabricante);
-                    
-                    return Ok(modeloResult, fabricanteResult);
-                }
+                _repository.Modelo.DeleteModelo(modelo);
+                _repository.Save();
+
+                return NoContent();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                _logger.LogError($"Algo deu errado dentro da ação GetOwnerWithDetails: {ex.Message}");
-                return StatusCode(500, "Erro do Servidor Interno");
+                _logger.LogError($"Algo deu errado dentro da ação DeleteModelo: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
     }

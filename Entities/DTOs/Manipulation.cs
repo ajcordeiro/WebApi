@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Entities.Models
+namespace Entities.DTOs
 {
-    [Table("modelo")]
-    public class ModeloModels
+    public class Manipulation
     {
-        [Column("modeloId")]
-        public Guid Id { get; set; }
-
         [Required(ErrorMessage = "O modelo do veiculo é obrigatório")]
         [StringLength(11, ErrorMessage = "O modelo do veiculo não pode ter mais de 11 caracteres")]
         public string? Modelo { get; set; }
@@ -24,11 +24,5 @@ namespace Entities.Models
 
         [Required(ErrorMessage = "O Id do tipo de combustível do veiculo é obrigatório")]
         public Guid CombustivelId { get; set; }
-
-       // [ForeignKey(nameof(FabricanteModels))]
-        //public Guid fabricanteId { get; set; }
-        public FabricanteModels? Fabricante { get; set; }
-
-
     }
 }

@@ -11,5 +11,9 @@ namespace Contracts
         ModeloModels GetModeloWithDetails(Guid modeloId);
 
         void CreateModelo(ModeloModels modelo);
+
+        void UpdateModelo(ModeloModels modelo);
+
+        void DeleteModelo(ModeloModels modelo);
     }
 }
